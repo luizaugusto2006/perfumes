@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Essência Árabe</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="admin-body">
+
+    <!-- ===== TELA DE LOGIN ===== -->
+    <div class="admin-login" id="login-screen">
+        <div class="admin-login-box">
+            <div class="admin-login-icon">🕌</div>
+            <h1 class="admin-login-title">Painel Admin</h1>
+            <p class="admin-login-sub">Essência Árabe</p>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="admin-senha">Senha</label>
+                    <input type="password" id="admin-senha" placeholder="Digite a senha" autocomplete="off">
+                </div>
+                <button type="submit" class="btn btn-admin-login">Entrar</button>
+                <p class="admin-login-error" id="login-error"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== PAINEL PRINCIPAL ===== -->
+    <div class="admin-panel" id="admin-panel" style="display:none;">
+        <header class="admin-header">
+            <div class="admin-header-inner">
+                <div class="admin-brand">
+                    <span class="logo-icon">🕌</span>
+                    <span class="logo-text">Essência <span>Árabe</span> <em class="admin-tag">Admin</em></span>
+                </div>
+                <div class="admin-header-actions">
+                    <button class="btn btn-admin-ghost" id="btn-reset">Restaurar Original</button>
+                    <button class="btn btn-admin" id="btn-export">⬇ Exportar data.js</button>
+                    <button class="btn btn-admin" id="btn-save">💾 Salvar Alterações</button>
+                    <button class="btn btn-admin-logout" id="btn-logout">Sair</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="admin-main container">
+            <div class="admin-toolbar">
+                <input type="text" id="admin-search" class="admin-search" placeholder="Buscar perfume...">
+                <select id="admin-filter-genre" class="admin-select">
+                    <option value="all">Todos os gêneros</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Feminino">Feminino</option>
+                    <option value="Unissex">Unissex</option>
+                </select>
+                <button class="btn btn-admin" id="btn-add">+ Novo Perfume</button>
+            </div>
+
+            <div class="admin-status" id="admin-status"></div>
+
+            <div class="admin-list" id="admin-list"></div>
+        </main>
+    </div>
+
+    <!-- ===== MODAL DE EDIÇÃO ===== -->
+    <div class="modal-overlay" id="admin-edit-modal">
+        <div class="modal modal-admin">
+            <button class="modal-close" id="admin-edit-close">&times;</button>
+            <h3 class="modal-title" id="admin-edit-title">Editar Perfume</h3>
+            <form id="admin-form">
+                <div class="form-group">
+                    <label for="f-nome">Nome *</label>
+                    <input type="text" id="f-nome" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="f-marca">Marca *</label>
+                        <input type="text" id="f-marca" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="f-idi">ID</label>
+                        <input type="number" id="f-idi" min="1">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="f-genero">Gênero</label>
+                        <select id="f-genero">
+                            <option value="Masculino">Masculino</option>
+                            <option value="Feminino">Feminino</option>
+                            <option value="Unissex">Unissex</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="f-categoria">Categoria</label>
+                        <select id="f-categoria">
+                            <option value="amadeirado">Amadeirado</option>
+                            <option value="floral">Floral</option>
+                            <option value="oud">Oud</option>
+                            <option value="citrico">Cítrico</option>
+                            <option value="gourmand">Gourmand</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="f-preco">Preço (R$) *</label>
+                        <input type="number" id="f-preco" step="0.01" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="f-fixacao">Fixação</label>
+                        <select id="f-fixacao">
+                            <option value="Média">Média</option>
+                            <option value="Alta">Alta</option>
+                            <option value="Muito Alta">Muito Alta</option>
+                            <option value="Extrema">Extrema</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="f-nota">Nota (0-5)</label>
+                        <input type="number" id="f-nota" step="0.1" min="0" max="5">
+                    </div>
+                    <div class="form-group">
+                        <label for="f-avaliacoes">Avaliações (nº)</label>
+                        <input type="number" id="f-avaliacoes" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="f-esgotado">Estoque</label>
+                        <select id="f-esgotado">
+                            <option value="disponivel">Disponível</option>
+                            <option value="esgotado">Esgotado</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="f-badge">Badge (selo)</label>
+                    <input type="text" id="f-badge" placeholder="Ex: Mais Vendido, Top Vendas...">
+                </div>
+                <div class="form-group">
+                    <label for="f-descricao">Descrição</label>
+                    <textarea id="f-descricao" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="f-inspirado">Inspirado em</label>
+                    <input type="text" id="f-inspirado">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="f-emoji">Emoji (fallback)</label>
+                        <input type="text" id="f-emoji" maxlength="4">
+                    </div>
+                    <div class="form-group">
+                        <label for="f-imagem">Imagem (caminho ou URL)</label>
+                        <input type="text" id="f-imagem" placeholder="images/Masculino/Asad.webp">
+                    </div>
+                </div>
+                <div class="form-group admin-img-preview">
+                    <label>Pré-visualização da imagem</label>
+                    <div class="admin-img-box" id="admin-img-preview">Sem imagem</div>
+                </div>
+                <div class="admin-form-actions">
+                    <button type="button" class="btn btn-admin-ghost" id="btn-delete">Excluir</button>
+                    <button type="submit" class="btn btn-admin">Salvar Perfume</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
