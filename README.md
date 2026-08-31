@@ -2,11 +2,19 @@
 
 Site de apresentação de perfumes árabes com pedido via WhatsApp. **100% estático** (HTML/CSS/JS), pronto para hospedar em qualquer servidor gratuito.
 
+## 🌐 Publicado
+
+- **GitHub Pages:** https://luizaugusto2006.github.io/perfumes/
+- **Repositório:** https://github.com/luizaugusto2006/perfumes
+- **PythonAnywhere:** *perfume.pythonanywhere.com* (configurar)
+
 ## ✅ Já configurado
 
 - Número do WhatsApp para pedidos: **55 21970088404** (em `js/script.js`)
-- **24 perfumes reais** mais vendidos para revenda em 2026 (Lattafa, Armaf, Rasasi, Al Haramain, etc.)
-- Filtros por **gênero**: **Todos / Masculino / Feminino / Unissex**. Produtos Unissex também aparecem em Masculino e Feminino.
+- **30 perfumes reais** mais vendidos (Lattafa, Armaf, Rasasi, Al Haramain, etc.)
+- Filtros por **gênero**: **Todos / Masculino / Feminino / Unissex** (10 de cada)
+- **Painel Admin** (`admin.html`) com senha para editar preços, estoque, fotos e cadastrar novos perfumes
+- Fotos reais dos frascos em **WebP** (pasta `images/`)
 - Modal de pedido via WhatsApp (nome, telefone, quantidade, observações)
 - Favicon + meta tags SEO + Open Graph (preview bonito ao compartilhar no WhatsApp)
 - Botão flutuante de WhatsApp
@@ -15,88 +23,71 @@ Site de apresentação de perfumes árabes com pedido via WhatsApp. **100% está
 ## 📦 Estrutura
 
 ```
-site-perfumes-arabes/
+perfumes/
 ├── index.html      → Página principal
+├── admin.html      → Painel administrativo (senha)
 ├── css/
-│   └── style.css   → Estilos
+│   ├── style.css   → Estilos do site
+│   └── admin.css   → Estilos do admin
 ├── js/
 │   ├── data.js     → Catálogo de perfumes
-│   └── script.js   → Lógica (filtros, modal, WhatsApp)
-└── images/         → Fotos dos produtos + favicon.png + og-image.png
+│   ├── script.js   → Lógica do site (filtros, modal, WhatsApp)
+│   └── admin.js    → Lógica do painel admin
+└── images/
+    ├── Masculino/  → Fotos (webp) dos perfumes masculinos
+    ├── Feminino/   → Fotos (webp) dos femininos
+    ├── Unissex/    → Fotos (webp) dos unissex
+    ├── favicon.png
+    └── og-image.png
 ```
 
-## 🚀 Hospedagem
+## 🔐 Painel Admin
 
-### Opção A - GitHub Pages (recomendado para o site público)
-1. Crie um repositório no GitHub (ex: `essencia-arabe`)
-2. Envie os arquivos (index.html, css/, js/, images/) para a raiz do repositório
-3. No repositório: **Settings → Pages → Branch: `main` → `/ (root)` → Save**
-4. Seu site ficará em `https://SEUUSUARIO.github.io/ESSENCIA-ARABE/`
+Acesse pelo **link discreto "•"** no rodapé do site ou abrindo `admin.html`.
 
-> Atualize a URL em `index.html` (meta `og:url`) e no botão flutuante se necessário.
+- **Senha padrão:** `admin123` (troque em `js/admin.js` → `const ADMIN_PASS = ...`)
+- Edite: nome, marca, gênero, categoria, **preço**, **estoque (Disponível/Esgotado)**, descrição, nota, avaliações, fixação, badge, foto e emoji.
+- Adicione / duplique / exclua perfumes.
+- **💾 Salvar Alterações** → guarda no navegador (as mudanças aparecem na hora no site).
+- **⬇ Exportar data.js** → gera o catálogo atualizado para substituir `js/data.js` e publicar.
 
-### Opção B - PythonAnywhere
-1. Entre em [pythonanywhere.com](https://www.pythonanywhere.com) (plano gratuito)
-2. **Files → Download a file** ou use o console para subir os arquivos
-3. Em **Web → Add a new web app** → escolha "Manual configuration → Static files"
-4. Aponte a URL `/` para a pasta onde está o `index.html`
+> ⚠️ As alterações ficam salvas no navegador onde você fez login. Para valerem para todos os visitantes, use **Exportar data.js**, substitua `js/data.js` no repositório e publique (GitHub Pages / PythonAnywhere).
 
-> Como o site é 100% estático, ele roda sem precisar de aplicação Python/Flask. O PythonAnywhere também permitirá, no futuro, um painel dinâmico de pedidos em `perfume.pythonanywhere.com`.
+## 🚀 Publicar alterações (GitHub Pages)
 
-> 🏗️ **Divisão de papéis sugerida:** use o **GitHub Pages** para o site de apresentação (rápido e bonito) e **PythonAnywhere** quando quiser um sistema com banco de dados / painel de pedidos.
+```bash
+cd C:\Projetos\site-perfumes-arabes
+git add -A
+git commit -m "descrição da alteração"
+git push origin main
+```
+
+O GitHub Pages publica automaticamente a branch `main` na raiz.
+
+## 🚀 PythonAnywhere (perfume.pythonanywhere.com)
+
+Como o site é 100% estático, suba os arquivos via **Files** ou console:
+
+```bash
+# no console PythonAnywhere (bash)
+git clone https://github.com/luizaugusto2006/perfumes.git /home/SEUUSUARIO/perfumes
+```
+
+Depois em **Web → Add a new web app** → *Manual configuration → Static files*:
+- URL `/` → pasta onde está o `index.html` (ex: `/home/SEUUSUARIO/perfumes/`)
 
 ## ⚙️ Configuração
 
 ### Número do WhatsApp (recebimento de pedidos)
 
-Em `js/script.js`, no topo:
-
+Em `js/script.js`:
 ```js
-const WHATSAPP_NUMBER = "5521970088404"; // já configurado
+const WHATSAPP_NUMBER = "5521970088404"; // 55 + DDD + número, só dígitos
 ```
-
-Formato: `55` + DDD + número, **somente dígitos**.
 
 ### Marcar um produto como Esgotado
 
-No `js/data.js`, adicione `esgotado: true` ao perfume:
-
-```js
-{
-    nome: "Liquid Brun",
-    ...
-    esgotado: true   // ← mostra "Esgotado" e esconde o botão de pedir
-}
-```
-
-## ✏️ Adicionar/editar perfumes
-
-Edite `js/data.js`. Campos:
-
-| Campo        | Descrição                            |
-|--------------|--------------------------------------|
-| id           | Identificador único                  |
-| nome         | Nome do perfume                      |
-| marca        | Marca/fabricante                     |
-| categoria    | `oud`, `floral`, `amadeirado`, `citrico` |
-| genero       | `Masculino`, `Feminino` ou `Unissex` |
-| preco        | Preço em R$ (decimal)                |
-| descricao    | Breve descrição                      |
-| badge        | Selo (ex: "Top Vendas") ou `""`      |
-| emoji        | Ícone (usado se não houver foto)     |
-| imagem       | (Opcional) caminho da foto, ex: `"images/asad.jpg"` |
-| fixacao      | Nível de fixação                     |
-| esgotado     | (Opcional) `true` para mostrar Esgotado |
-
-### Fotos reais dos produtos
-
-Fotografe seus frascos e salve em `images/`, depois referencie:
-
-```js
-{ ..., imagem: "images/asad.jpg", emoji: "🦁" }
-```
-
-O card exibe a foto automaticamente. Sem o campo `imagem`, usa o emoji.
+No admin: Estoque → **Esgotado**. Ou manualmente no `data.js` adicione `esgotado: true`.
 
 ## ▶️ Visualizar localmente
 
@@ -107,4 +98,3 @@ npx serve                   # Node
 ```
 
 Depois acesse `http://localhost:8000`.
-
