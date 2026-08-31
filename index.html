@@ -157,6 +157,13 @@
                             <p>Para todo o Brasil</p>
                         </div>
                     </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">💳</span>
+                        <div>
+                            <strong>Formas de Pagamento</strong>
+                            <p>PIX e Cartão (até 3x)</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="contato-action">
                     <a href="https://wa.me/5521970088404" target="_blank" class="btn btn-whatsapp-large" data-multi-wa>
@@ -239,11 +246,27 @@
                     <label for="observacoes">Observações (opcional)</label>
                     <textarea id="observacoes" name="observacoes" rows="3" placeholder="Ex: presente para aniversário, tamanho, etc."></textarea>
                 </div>
-                <div class="payment-methods">
-                    <span class="payment-badge pix">PIX</span>
-                    <span class="payment-badge">Cartão</span>
-                    <span class="payment-badge">Parcelado</span>
-                    <span class="payment-badge vazio">Até 3x sem juros</span>
+                <div class="form-group">
+                    <label>Forma de Pagamento *</label>
+                    <div class="payment-options" id="payment-options">
+                        <label class="payment-option">
+                            <input type="radio" name="pagamento" value="Pix" required>
+                            <span class="payment-option-box">
+                                <span class="payment-option-icon">⚡</span>
+                                <span class="payment-option-label">PIX</span>
+                                <span class="payment-option-desc">aprovação imediata</span>
+                            </span>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="pagamento" value="Cartão">
+                            <span class="payment-option-box">
+                                <span class="payment-option-icon">💳</span>
+                                <span class="payment-option-label">Cartão</span>
+                                <span class="payment-option-desc">até 3x sem juros</span>
+                            </span>
+                        </label>
+                    </div>
+                    <p class="payment-error" id="payment-error"></p>
                 </div>
                 <button type="submit" class="btn btn-whatsapp-modal">
                     <span class="wa-icon">💬</span> Enviar Pedido no WhatsApp

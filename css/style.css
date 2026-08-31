@@ -1003,6 +1003,74 @@ input[type=number] {
     font-size: 0.7rem;
 }
 
+/* ===== Seleção de pagamento (radio, sem pagamento online) ===== */
+.payment-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 6px;
+}
+
+.payment-option {
+    flex: 1;
+    min-width: 140px;
+    cursor: pointer;
+}
+
+.payment-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.payment-option-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 14px 12px;
+    background: var(--dark-3);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    text-align: center;
+    transition: all 0.2s;
+}
+
+.payment-option-icon {
+    font-size: 1.6rem;
+    line-height: 1;
+}
+
+.payment-option-label {
+    font-weight: 600;
+    color: var(--text);
+    font-size: 0.95rem;
+}
+
+.payment-option-desc {
+    font-size: 0.7rem;
+    color: var(--text-soft);
+}
+
+.payment-option input[type="radio"]:checked + .payment-option-box {
+    border-color: var(--gold);
+    background: rgba(212, 175, 55, 0.12);
+    box-shadow: 0 0 0 1px var(--gold);
+}
+
+.payment-option input[type="radio"]:checked + .payment-option-box .payment-option-label {
+    color: var(--gold);
+}
+
+.payment-error {
+    color: #ff6b6b;
+    font-size: 0.8rem;
+    margin-top: 6px;
+    min-height: 0;
+}
+
+
 /* Modal de política */
 .modal-policy {
     max-width: 520px;

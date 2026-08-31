@@ -209,6 +209,14 @@ document.addEventListener('DOMContentLoaded', function () {
         qtyInput.value = v;
     });
 
+    // Limpa o aviso de pagamento ao selecionar uma opção
+    document.querySelectorAll('input[name="pagamento"]').forEach(function (r) {
+        r.addEventListener('change', function () {
+            const err = document.getElementById('payment-error');
+            if (err) err.textContent = '';
+        });
+    });
+
     // ===== Enviar pedido via WhatsApp =====
     orderForm.addEventListener('submit', function (e) {
         e.preventDefault();
@@ -220,9 +228,17 @@ document.addEventListener('DOMContentLoaded', function () {
         const telefone = document.getElementById('telefone').value.trim();
         const quantidade = parseInt(qtyInput.value) || 1;
         const observacoes = document.getElementById('observacoes').value.trim();
+        const pagamento = document.querySelector('input[name="pagamento"]:checked');
 
         if (!nome || !telefone) {
             alert('Por favor, preencha nome e telefone.');
+            return;
+        }
+
+        if (!pagamento) {
+            const err = document.getElementById('payment-error');
+            if (err) err.textContent = 'Selecione a forma de pagamento.';
+            alert('Por favor, selecione a forma de pagamento (PIX ou Cartão).');
             return;
         }
 
@@ -232,7 +248,8 @@ document.addEventListener('DOMContentLoaded', function () {
         mensagem += `*Perfume:* ${perfume.nome} (${perfume.marca})\n`;
         mensagem += `*Valor unitário:* ${formatPrice(perfume.preco)}\n`;
         mensagem += `*Quantidade:* ${quantidade}\n`;
-        mensagem += `*Total:* ${formatPrice(total)}\n\n`;
+        mensagem += `*Total:* ${formatPrice(total)}\n`;
+        mensagem += `*Pagamento:* ${pagamento.value}\n\n`;
         mensagem += `*Dados do Cliente:*\n`;
         mensagem += `*Nome:* ${nome}\n`;
         mensagem += `*Telefone:* ${telefone}\n`;
