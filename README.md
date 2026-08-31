@@ -10,7 +10,7 @@ Site de apresentação de perfumes árabes com pedido via WhatsApp. **100% está
 
 ## ✅ Já configurado
 
-- Número do WhatsApp para pedidos: **55 21970088404** (em `js/script.js`)
+- Número do WhatsApp para pedidos: **55 21964351472** (em `js/script.js`)
 - **30 perfumes reais** mais vendidos (Lattafa, Armaf, Rasasi, Al Haramain, etc.)
 - Filtros por **gênero**: **Todos / Masculino / Feminino / Unissex** (10 de cada)
 - **Painel Admin** (`admin.html`) com senha para editar preços, estoque, fotos e cadastrar novos perfumes
@@ -82,7 +82,7 @@ Depois em **Web → Add a new web app** → *Manual configuration → Static fil
 
 Em `js/script.js`:
 ```js
-const WHATSAPP_NUMBER = "5521970088404"; // 55 + DDD + número, só dígitos
+const WHATSAPP_NUMBER = "5521964351472"; // principal, 55 + DDD + número, só dígitos
 ```
 
 ### Marcar um produto como Esgotado

@@ -1,6 +1,6 @@
 // ===== NÚMEROS DO WHATSAPP PARA RECEBER PEDIDOS =====
-const WHATSAPP_NUMBER = "5521970088404"; // principal (links fixos)
-const WHATSAPP_NUMBERS = ["5521970088404", "55998951868"]; // pedidos vão para ambos
+const WHATSAPP_NUMBER = "5521964351472"; // principal (links fixos)
+const WHATSAPP_NUMBERS = ["5521964351472", "55998951868"]; // pedidos vão para ambos
 
 // ===== Catálogo (admite override via admin localStorage) =====
 let perfumesData = (typeof perfumes !== 'undefined') ? perfumes.slice() : [];
