@@ -4,6 +4,15 @@ const WHATSAPP_NUMBER = "5521964351472";
 // ===== Catálogo (carregado da API) =====
 let perfumesData = [];
 
+function renderAllPerfumes() {
+    const grid = document.getElementById('perfumes-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    perfumesData.forEach(function (perfume) {
+        grid.appendChild(renderPerfumeCard(perfume));
+    });
+}
+
 async function loadPerfumes() {
     try {
         const res = await fetch('/api/perfumes');
@@ -139,14 +148,6 @@ function renderPerfumeCard(perfume) {
 document.addEventListener('DOMContentLoaded', function () {
 
     const grid = document.getElementById('perfumes-grid');
-
-    // Renderiza todos os perfumes
-    function renderAllPerfumes() {
-        grid.innerHTML = '';
-        perfumesData.forEach(function (perfume) {
-            grid.appendChild(renderPerfumeCard(perfume));
-        });
-    }
 
     // Carrega dados da API e renderiza
     loadPerfumes();
