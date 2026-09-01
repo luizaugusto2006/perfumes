@@ -48,20 +48,47 @@
         </header>
 
         <main class="admin-main container">
-            <div class="admin-toolbar">
-                <input type="text" id="admin-search" class="admin-search" placeholder="Buscar perfume...">
-                <select id="admin-filter-genre" class="admin-select">
-                    <option value="all">Todos os gêneros</option>
-                    <option value="Masculino">Masculino</option>
-                    <option value="Feminino">Feminino</option>
-                    <option value="Unissex">Unissex</option>
-                </select>
-                <button class="btn btn-admin" id="btn-add">+ Novo Perfume</button>
+            <!-- Abas -->
+            <div class="admin-tabs">
+                <button class="admin-tab active" data-tab="perfumes">Perfumes</button>
+                <button class="admin-tab" data-tab="pedidos">Pedidos</button>
             </div>
 
-            <div class="admin-status" id="admin-status"></div>
+            <!-- Aba Perfumes -->
+            <div class="admin-tab-content active" id="tab-perfumes">
+                <div class="admin-toolbar">
+                    <input type="text" id="admin-search" class="admin-search" placeholder="Buscar perfume...">
+                    <select id="admin-filter-genre" class="admin-select">
+                        <option value="all">Todos os gêneros</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Feminino">Feminino</option>
+                        <option value="Unissex">Unissex</option>
+                    </select>
+                    <button class="btn btn-admin" id="btn-add">+ Novo Perfume</button>
+                </div>
 
-            <div class="admin-list" id="admin-list"></div>
+                <div class="admin-status" id="admin-status"></div>
+
+                <div class="admin-list" id="admin-list"></div>
+            </div>
+
+            <!-- Aba Pedidos -->
+            <div class="admin-tab-content" id="tab-pedidos">
+                <div class="admin-toolbar">
+                    <select id="order-filter-status" class="admin-select">
+                        <option value="all">Todos os status</option>
+                        <option value="Solicitado">Solicitado</option>
+                        <option value="Confirmado">Confirmado</option>
+                        <option value="Enviado">Enviado</option>
+                        <option value="Entregue">Entregue</option>
+                        <option value="Cancelado">Cancelado</option>
+                    </select>
+                </div>
+
+                <div class="admin-status" id="order-status"></div>
+
+                <div class="admin-list" id="orders-list"></div>
+            </div>
         </main>
     </div>
 
@@ -118,6 +145,10 @@
                             <option value="Muito Alta">Muito Alta</option>
                             <option value="Extrema">Extrema</option>
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="f-estoque">Estoque (un.)</label>
+                        <input type="number" id="f-estoque" min="0">
                     </div>
                 </div>
                 <div class="form-row">

@@ -17,6 +17,25 @@ try {
     // ignora e usa o catálogo padrão
 }
 
+// ===== Pedidos salvos no localStorage =====
+function getOrders() {
+    try {
+        const saved = localStorage.getItem('ea_orders');
+        return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+        return [];
+    }
+}
+
+function saveOrder(order) {
+    const orders = getOrders();
+    order.id = Date.now();
+    order.data = new Date().toLocaleString('pt-BR');
+    order.status = 'Solicitado';
+    orders.push(order);
+    localStorage.setItem('ea_orders', JSON.stringify(orders));
+}
+
 // ===== Formatação de preço BRL =====
 function formatPrice(value) {
     return value.toLocaleString('pt-BR', {
@@ -242,6 +261,20 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         const total = perfume.preco * quantidade;
+
+        // Salva o pedido no localStorage
+        saveOrder({
+            perfumeId: perfume.id,
+            perfume: perfume.nome,
+            marca: perfume.marca,
+            preco: perfume.preco,
+            quantidade: quantidade,
+            total: total,
+            pagamento: pagamento.value,
+            nome: nome,
+            telefone: telefone,
+            observacoes: observacoes
+        });
 
         let mensagem = `*🕌 NOVO PEDIDO - ESSÊNCIA ÁRABE*\n\n`;
         mensagem += `*Perfume:* ${perfume.nome} (${perfume.marca})\n`;

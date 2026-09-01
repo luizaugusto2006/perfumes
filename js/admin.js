@@ -75,16 +75,17 @@
         }
 
         listEl.innerHTML = filtered.map(function (p) {
-            const stock = p.esgotado
+            var stock = p.esgotado
                 ? '<span class="admin-stock-badge esg">Esgotado</span>'
                 : '<span class="admin-stock-badge disp">Disponível</span>';
-            const img = p.imagem
+            var stockQty = p.estoque != null ? '<span class="admin-stock-qty">(' + p.estoque + ' un.)</span>' : '';
+            var img = p.imagem
                 ? '<img src="' + escapeHtml(p.imagem) + '" alt="">'
                 : escapeHtml(p.emoji || '🫙');
             return '<div class="admin-item" data-id="' + p.id + '">' +
                 '<div class="admin-item-img">' + img + '</div>' +
                 '<div class="admin-item-body">' +
-                    '<h3 class="admin-item-title">' + escapeHtml(p.nome) + ' ' + stock + '</h3>' +
+                    '<h3 class="admin-item-title">' + escapeHtml(p.nome) + ' ' + stock + stockQty + '</h3>' +
                     '<div class="admin-item-meta">' + escapeHtml(p.marca) + ' • ' + escapeHtml(p.genero) + ' • ' + escapeHtml(p.categoria || '') + '</div>' +
                     '<div class="admin-item-price">' + formatPrice(p.preco) + '</div>' +
                     '<div class="admin-item-actions">' +
@@ -115,6 +116,7 @@
         document.getElementById('f-categoria').value = p.categoria || 'amadeirado';
         document.getElementById('f-preco').value = p.preco != null ? p.preco : '';
         document.getElementById('f-fixacao').value = p.fixacao || 'Alta';
+        document.getElementById('f-estoque').value = p.estoque != null ? p.estoque : 5;
         document.getElementById('f-nota').value = p.nota != null ? p.nota : '';
         document.getElementById('f-avaliacoes').value = p.avaliacoes != null ? p.avaliacoes : '';
         document.getElementById('f-esgotado').value = p.esgotado ? 'esgotado' : 'disponivel';
@@ -165,6 +167,7 @@
             nota: parseFloat(document.getElementById('f-nota').value) || 0,
             avaliacoes: parseInt(document.getElementById('f-avaliacoes').value) || 0,
             fixacao: document.getElementById('f-fixacao').value,
+            estoque: parseInt(document.getElementById('f-estoque').value) || 0,
             badge: document.getElementById('f-badge').value.trim(),
             emoji: document.getElementById('f-emoji').value || '🫙',
             imagem: document.getElementById('f-imagem').value.trim(),
@@ -314,6 +317,126 @@
         document.getElementById('admin-edit-modal').addEventListener('click', function (e) {
             if (e.target === this) closeModal();
         });
+
+        // ===== Abas =====
+        document.querySelectorAll('.admin-tab').forEach(function (tab) {
+            tab.addEventListener('click', function () {
+                document.querySelectorAll('.admin-tab').forEach(function (t) { t.classList.remove('active'); });
+                document.querySelectorAll('.admin-tab-content').forEach(function (c) { c.classList.remove('active'); });
+                tab.classList.add('active');
+                var tabId = 'tab-' + tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+                if (tab.getAttribute('data-tab') === 'pedidos') renderOrders();
+            });
+        });
+
+        // ===== Pedidos =====
+        document.getElementById('order-filter-status').addEventListener('change', renderOrders);
+    }
+
+    // ---------- Pedidos ----------
+    function getOrders() {
+        try {
+            var saved = localStorage.getItem('ea_orders');
+            return saved ? JSON.parse(saved) : [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function saveOrders(orders) {
+        localStorage.setItem('ea_orders', JSON.stringify(orders));
+    }
+
+    function renderOrders() {
+        var listEl = document.getElementById('orders-list');
+        var statusFilter = document.getElementById('order-filter-status').value;
+        var orders = getOrders();
+
+        var filtered = orders.filter(function (o) {
+            return statusFilter === 'all' || o.status === statusFilter;
+        });
+
+        if (!filtered.length) {
+            listEl.innerHTML = '<p style="color:var(--text-soft);text-align:center;padding:40px;">Nenhum pedido encontrado.</p>';
+            return;
+        }
+
+        listEl.innerHTML = filtered.reverse().map(function (o) {
+            var statusClass = 'status-' + o.status.toLowerCase();
+            var actions = '';
+            if (o.status === 'Solicitado') {
+                actions = '<button class="admin-mini-btn btn-confirm" data-action="confirm" data-id="' + o.id + '">✅ Confirmar</button>' +
+                          '<button class="admin-mini-btn btn-cancel" data-action="cancel" data-id="' + o.id + '">❌ Cancelar</button>';
+            } else if (o.status === 'Confirmado') {
+                actions = '<button class="admin-mini-btn" data-action="ship" data-id="' + o.id + '">📦 Enviar</button>';
+            } else if (o.status === 'Enviado') {
+                actions = '<button class="admin-mini-btn" data-action="deliver" data-id="' + o.id + '">🚚 Entregue</button>';
+            }
+
+            return '<div class="admin-item order-item" data-id="' + o.id + '">' +
+                '<div class="admin-item-body">' +
+                    '<h3 class="admin-item-title">' + escapeHtml(o.perfume) + ' <span class="order-status-badge ' + statusClass + '">' + o.status + '</span></h3>' +
+                    '<div class="admin-item-meta">' + escapeHtml(o.marca) + ' • ' + o.quantidade + 'x • ' + formatPrice(o.total) + '</div>' +
+                    '<div class="admin-item-meta">' + escapeHtml(o.nome) + ' • ' + escapeHtml(o.telefone) + ' • ' + o.pagamento + '</div>' +
+                    '<div class="admin-item-meta">' + o.data + '</div>' +
+                    (o.observacoes ? '<div class="admin-item-meta">Obs: ' + escapeHtml(o.observacoes) + '</div>' : '') +
+                    '<div class="admin-item-actions">' + actions + '</div>' +
+                '</div>' +
+            '</div>';
+        }).join('');
+
+        // Bind order actions
+        listEl.querySelectorAll('[data-action]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var action = btn.getAttribute('data-action');
+                var id = parseInt(btn.getAttribute('data-id'));
+                updateOrderStatus(id, action);
+            });
+        });
+    }
+
+    function updateOrderStatus(id, action) {
+        var orders = getOrders();
+        var order = orders.find(function (o) { return o.id === id; });
+        if (!order) return;
+
+        var newStatus = '';
+        var stockChange = 0;
+
+        switch (action) {
+            case 'confirm':
+                newStatus = 'Confirmado';
+                stockChange = -order.quantidade;
+                break;
+            case 'cancel':
+                newStatus = 'Cancelado';
+                break;
+            case 'ship':
+                newStatus = 'Enviado';
+                break;
+            case 'deliver':
+                newStatus = 'Entregue';
+                break;
+        }
+
+        if (newStatus) {
+            order.status = newStatus;
+            saveOrders(orders);
+
+            // Baixa estoque ao confirmar
+            if (stockChange !== 0) {
+                var perfume = data.find(function (p) { return p.id === order.perfumeId; });
+                if (perfume) {
+                    perfume.estoque = Math.max(0, (perfume.estoque || 0) + stockChange);
+                    persist();
+                    renderList();
+                }
+            }
+
+            renderOrders();
+            showStatus('Pedido #' + id + ' atualizado para: ' + newStatus, 'success');
+        }
     }
 
     document.addEventListener('DOMContentLoaded', bindEvents);

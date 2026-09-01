@@ -1,4 +1,4 @@
-const perfumes = [
+﻿const perfumes = [
     {
         id: 1,
         nome: "Asad",
@@ -14,6 +14,7 @@ const perfumes = [
         badge: "Mais Vendido",
         emoji: "🦁",
         imagem: "images/Masculino/asad.webp",
+        estoque: 5,
         esgotado: false
     },
     {
@@ -31,6 +32,7 @@ const perfumes = [
         badge: "Top Vendas",
         emoji: "🍍",
         imagem: "images/Masculino/Club de Nuit Intense Man.webp",
+        estoque: 5,
         esgotado: false
     },
     {
@@ -48,6 +50,7 @@ const perfumes = [
         badge: "",
         emoji: "🌊",
         imagem: "images/Masculino/Hawas For Him.webp",
+        estoque: 5,
         esgotado: false
     },
     {
@@ -65,6 +68,7 @@ const perfumes = [
         badge: "",
         emoji: "🌿",
         imagem: "images/Masculino/Oud for Glory.webp",
+        estoque: 5,
         esgotado: false
     },
     {
@@ -82,6 +86,7 @@ const perfumes = [
         badge: "Custo-Benefício",
         emoji: "💧",
         imagem: "images/Masculino/Salvo.webp",
+        estoque: 5,
         esgotado: false
     },
     {
@@ -99,6 +104,7 @@ const perfumes = [
         badge: "Premium",
         emoji: "🍋",
         imagem: "images/Masculino/L'Aventure.webp",
+        estoque: 5,
         esgotado: false
     },
     {
@@ -116,6 +122,7 @@ const perfumes = [
         badge: "",
         emoji: "⚡",
         imagem: "images/Masculino/Asad Elixir.webp",
+        estoque: 5,
         esgotado: false
     },
     {
@@ -133,6 +140,7 @@ const perfumes = [
         badge: "Custo-Benefício",
         emoji: "🔥",
         imagem: "images/Masculino/Raghba.webp",
+        estoque: 5,
         esgotado: false
     },
     {
@@ -150,6 +158,7 @@ const perfumes = [
         badge: "",
         emoji: "🖤",
         imagem: "images/Masculino/Fakhar Black.webp",
+        estoque: 5,
         esgotado: false
     },
     {
@@ -167,6 +176,7 @@ const perfumes = [
         badge: "",
         emoji: "💙",
         imagem: "images/Masculino/Turathi Blue.webp",
+        estoque: 5,
         esgotado: false
     },
     {
@@ -184,6 +194,7 @@ const perfumes = [
         badge: "Mais Vendido",
         emoji: "🌸",
         imagem: "images/Feminino/Yara.webp",
+        estoque: 5,
         esgotado: false
     },
     {
@@ -201,6 +212,7 @@ const perfumes = [
         badge: "",
         emoji: "🌹",
         imagem: "images/Feminino/Sabah Al Ward.webp",
+        estoque: 5,
         esgotado: false
     },
     {
@@ -218,6 +230,7 @@ const perfumes = [
         badge: "",
         emoji: "🧜‍♀️",
         imagem: "images/Feminino/Fakhar Rose.webp",
+        estoque: 5,
         esgotado: false
     },
     {
@@ -235,6 +248,7 @@ const perfumes = [
         badge: "Viral",
         emoji: "🐝",
         imagem: "images/Feminino/Atheeri.webp",
+        estoque: 5,
         esgotado: false
     },
     {
@@ -252,6 +266,7 @@ const perfumes = [
         badge: "",
         emoji: "🌷",
         imagem: "images/Feminino/Mayar.webp",
+        estoque: 5,
         esgotado: false
     },
     {
@@ -269,6 +284,7 @@ const perfumes = [
         badge: "",
         emoji: "💛",
         imagem: "images/Feminino/Nebras.webp",
+        estoque: 5,
         esgotado: false
     },
     {
@@ -286,6 +302,7 @@ const perfumes = [
         badge: "",
         emoji: "🍓",
         imagem: "images/Feminino/Ana Abiyedh Rouge.webp",
+        estoque: 5,
         esgotado: false
     },
     {
@@ -303,6 +320,7 @@ const perfumes = [
         badge: "",
         emoji: "🩷",
         imagem: "images/Feminino/Yara Tous.webp",
+        estoque: 5,
         esgotado: false
     },
     {
@@ -320,6 +338,7 @@ const perfumes = [
         badge: "",
         emoji: "🪷",
         imagem: "images/Feminino/Durrat Al Aroos.webp",
+        estoque: 5,
         esgotado: false
     },
     {
@@ -337,6 +356,7 @@ const perfumes = [
         badge: "",
         emoji: "💎",
         imagem: "images/Feminino/Watani.webp",
+        estoque: 5,
         esgotado: false
     },
     {
@@ -354,6 +374,7 @@ const perfumes = [
         badge: "Tendência",
         emoji: "🥃",
         imagem: "images/Unissex/Khamrah.webp",
+        estoque: 5,
         esgotado: false
     },
     {
@@ -371,6 +392,7 @@ const perfumes = [
         badge: "Premium",
         emoji: "💜",
         imagem: "images/Unissex/Bade'e Al Oud Amethyst.webp",
+        estoque: 5,
         esgotado: false
     },
     {
@@ -388,6 +410,7 @@ const perfumes = [
         badge: "Top 2026",
         emoji: "👑",
         imagem: "images/Unissex/Liquid Brun.webp",
+        estoque: 5,
         esgotado: false
     },
     {
@@ -405,6 +428,7 @@ const perfumes = [
         badge: "Top Fixação",
         emoji: "🥃",
         imagem: "images/Unissex/Asad Bourbon.webp",
+        estoque: 5,
         esgotado: false
     },
     {
@@ -422,6 +446,7 @@ const perfumes = [
         badge: "Premium",
         emoji: "🕋",
         imagem: "images/Unissex/Shaghaf Oud.webp",
+        estoque: 5,
         esgotado: false
     },
     {
@@ -439,6 +464,7 @@ const perfumes = [
         badge: "Luxo",
         emoji: "👑",
         imagem: "images/Unissex/Royal Amber.webp",
+        estoque: 5,
         esgotado: false
     },
     {
@@ -456,6 +482,7 @@ const perfumes = [
         badge: "",
         emoji: "🕯️",
         imagem: "images/Unissex/Detour Noir.webp",
+        estoque: 5,
         esgotado: false
     },
     {
@@ -473,6 +500,7 @@ const perfumes = [
         badge: "Noite",
         emoji: "🌙",
         imagem: "images/Unissex/Afnan 9PM.webp",
+        estoque: 5,
         esgotado: false
     },
     {
@@ -490,6 +518,7 @@ const perfumes = [
         badge: "",
         emoji: "🏅",
         imagem: "images/Unissex/Honor & Glory.webp",
+        estoque: 5,
         esgotado: false
     },
     {
@@ -507,6 +536,7 @@ const perfumes = [
         badge: "",
         emoji: "⚜️",
         imagem: "images/Unissex/Supremacy Not Only Intense.webp",
+        estoque: 5,
         esgotado: false
     }
 ];

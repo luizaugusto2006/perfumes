@@ -255,6 +255,61 @@
 .admin-img-box img { width: 100%; height: 100%; object-fit: contain; }
 .admin-form-actions { display: flex; justify-content: space-between; gap: 12px; margin-top: 6px; }
 
+/* ===== Abas ===== */
+.admin-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 10px;
+}
+.admin-tab {
+    background: transparent;
+    color: var(--text-soft);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+.admin-tab:hover { color: var(--gold); }
+.admin-tab.active {
+    background: var(--gold);
+    color: var(--dark);
+    font-weight: 600;
+}
+.admin-tab-content { display: none; }
+.admin-tab-content.active { display: block; }
+
+/* ===== Status dos pedidos ===== */
+.order-status-badge {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+.status-solicitado { background: rgba(255,193,7,0.2); color: #ffc107; }
+.status-confirmado { background: rgba(46,213,115,0.2); color: #2ed573; }
+.status-enviado { background: rgba(52,152,219,0.2); color: #3498db; }
+.status-entregue { background: rgba(155,89,182,0.2); color: #9b59b6; }
+.status-cancelado { background: rgba(255,107,107,0.2); color: #ff6b6b; }
+
+.order-item .admin-item-meta { margin-bottom: 4px; }
+.btn-confirm { border-color: #2ed573 !important; color: #2ed573 !important; }
+.btn-confirm:hover { background: rgba(46,213,115,0.2) !important; }
+.btn-cancel { border-color: #ff6b6b !important; color: #ff6b6b !important; }
+.btn-cancel:hover { background: rgba(255,107,107,0.2) !important; }
+
+/* ===== Estoque ===== */
+.admin-stock-qty {
+    font-size: 0.8rem;
+    color: var(--gold);
+    font-weight: 600;
+    margin-left: 8px;
+}
+
 @media (max-width: 600px) {
     .admin-header-inner { flex-direction: column; align-items: stretch; }
     .admin-header-actions { justify-content: center; }
