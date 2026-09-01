@@ -1,12 +1,11 @@
-﻿const perfumes = [
-    // ===== MASCULINOS =====
+const perfumes = [
     {
         id: 1,
         nome: "Asad",
         marca: "Lattafa",
         categoria: "amadeirado",
         genero: "Masculino",
-        preco: 219.90,
+        preco: 218.85,
         descricao: "O perfume árabe masculino mais vendido do Brasil. Amadeirado adocicado com baunilha, pimenta e couro.",
         inspirado: "Inspirado no Dior Sauvage Elixir",
         nota: 4.8,
@@ -15,6 +14,7 @@
         badge: "Mais Vendido",
         emoji: "🦁",
         imagem: "images/Masculino/asad.webp",
+        esgotado: false
     },
     {
         id: 2,
@@ -22,7 +22,7 @@
         marca: "Armaf",
         categoria: "amadeirado",
         genero: "Masculino",
-        preco: 249.90,
+        preco: 249.9,
         descricao: "Frutado, esfumaçado e amadeirado. O produto que mais converte venda por impulso.",
         inspirado: "Inspirado no Creed Aventus",
         nota: 4.9,
@@ -31,6 +31,7 @@
         badge: "Top Vendas",
         emoji: "🍍",
         imagem: "images/Masculino/Club de Nuit Intense Man.webp",
+        esgotado: false
     },
     {
         id: 3,
@@ -38,7 +39,7 @@
         marca: "Rasasi",
         categoria: "citrico",
         genero: "Masculino",
-        preco: 279.90,
+        preco: 279.9,
         descricao: "Aquático e fresco com ameixa, maçã e canela. Ideal para o clima brasileiro e verão.",
         inspirado: "Inspirado no Versace Pour Homme",
         nota: 4.7,
@@ -47,6 +48,7 @@
         badge: "",
         emoji: "🌊",
         imagem: "images/Masculino/Hawas For Him.webp",
+        esgotado: false
     },
     {
         id: 4,
@@ -54,7 +56,7 @@
         marca: "Lattafa",
         categoria: "oud",
         genero: "Masculino",
-        preco: 229.90,
+        preco: 229.9,
         descricao: "Saffron, oud, lavanda e almíscar. Oud acessível com assinatura forte duradoura.",
         inspirado: "Inspirado no Initio Oud for Greatness",
         nota: 4.6,
@@ -63,6 +65,7 @@
         badge: "",
         emoji: "🌿",
         imagem: "images/Masculino/Oud for Glory.webp",
+        esgotado: false
     },
     {
         id: 5,
@@ -70,7 +73,7 @@
         marca: "Maison Alhambra",
         categoria: "citrico",
         genero: "Masculino",
-        preco: 189.90,
+        preco: 189.9,
         descricao: "O mais versátil, na pegada do Sauvage. Fresco e fácil de usar para o dia e trabalho.",
         inspirado: "Inspirado no Dior Sauvage",
         nota: 4.6,
@@ -79,6 +82,7 @@
         badge: "Custo-Benefício",
         emoji: "💧",
         imagem: "images/Masculino/Salvo.webp",
+        esgotado: false
     },
     {
         id: 6,
@@ -86,7 +90,7 @@
         marca: "Al Haramain",
         categoria: "citrico",
         genero: "Masculino",
-        preco: 299.90,
+        preco: 299.9,
         descricao: "A opção premium de dupe do Aventus. Considerado o mais fiel ao original.",
         inspirado: "Inspirado no Creed Aventus",
         nota: 4.7,
@@ -95,6 +99,7 @@
         badge: "Premium",
         emoji: "🍋",
         imagem: "images/Masculino/L'Aventure.webp",
+        esgotado: false
     },
     {
         id: 7,
@@ -102,7 +107,7 @@
         marca: "Lattafa",
         categoria: "oud",
         genero: "Masculino",
-        preco: 259.90,
+        preco: 259.9,
         descricao: "Evolução concentrada do Asad. Especiarias, tabaco e baunilha. Presença marcante.",
         inspirado: "Inspirado no Beau de Jour (Tom Ford)",
         nota: 4.7,
@@ -111,6 +116,7 @@
         badge: "",
         emoji: "⚡",
         imagem: "images/Masculino/Asad Elixir.webp",
+        esgotado: false
     },
     {
         id: 8,
@@ -118,7 +124,7 @@
         marca: "Lattafa",
         categoria: "amadeirado",
         genero: "Masculino",
-        preco: 159.90,
+        preco: 159.9,
         descricao: "O porta de entrada perfeito. Doce, quente e acessível para iniciantes.",
         inspirado: "",
         nota: 4.4,
@@ -127,6 +133,7 @@
         badge: "Custo-Benefício",
         emoji: "🔥",
         imagem: "images/Masculino/Raghba.webp",
+        esgotado: false
     },
     {
         id: 9,
@@ -134,7 +141,7 @@
         marca: "Lattafa",
         categoria: "amadeirado",
         genero: "Masculino",
-        preco: 199.90,
+        preco: 199.9,
         descricao: "Maçã, lavanda, incenso e couro. Sofisticado e elegante para noites especiais.",
         inspirado: "Inspirado no Parfums de Marly Layton",
         nota: 4.5,
@@ -143,6 +150,7 @@
         badge: "",
         emoji: "🖤",
         imagem: "images/Masculino/Fakhar Black.webp",
+        esgotado: false
     },
     {
         id: 10,
@@ -150,7 +158,7 @@
         marca: "Afnan",
         categoria: "citrico",
         genero: "Masculino",
-        preco: 269.90,
+        preco: 269.9,
         descricao: "Blue moderno, fresco e elegante. Perfeito para o dia a dia, trabalho e clima quente.",
         inspirado: "Inspirado no Bleu de Chanel",
         nota: 4.7,
@@ -159,15 +167,15 @@
         badge: "",
         emoji: "💙",
         imagem: "images/Masculino/Turathi Blue.webp",
+        esgotado: false
     },
-    // ===== FEMININOS =====
     {
         id: 11,
         nome: "Yara",
         marca: "Lattafa",
         categoria: "floral",
         genero: "Feminino",
-        preco: 189.90,
+        preco: 189.9,
         descricao: "O perfume árabe feminino mais vendido do Brasil. Doce de baunilha, orquídea e heliotrópio. Febre nas redes.",
         inspirado: "Inspirado no La Vie Est Belle",
         nota: 4.9,
@@ -176,6 +184,7 @@
         badge: "Mais Vendido",
         emoji: "🌸",
         imagem: "images/Feminino/Yara.webp",
+        esgotado: false
     },
     {
         id: 12,
@@ -183,7 +192,7 @@
         marca: "Al Wataniah",
         categoria: "floral",
         genero: "Feminino",
-        preco: 169.90,
+        preco: 169.9,
         descricao: "O clássico 'perfume rosa'. Floral oriental com maçã e rosa. Romântico e versátil.",
         inspirado: "Inspirado no Delina (Parfums de Marly)",
         nota: 4.5,
@@ -192,6 +201,7 @@
         badge: "",
         emoji: "🌹",
         imagem: "images/Feminino/Sabah Al Ward.webp",
+        esgotado: false
     },
     {
         id: 13,
@@ -199,7 +209,7 @@
         marca: "Lattafa",
         categoria: "floral",
         genero: "Feminino",
-        preco: 219.90,
+        preco: 219.9,
         descricao: "O 'perfume da sereia'. Floral de rosa com toque gourmand de baunilha. Elegante e delicado. Frasco azul.",
         inspirado: "Inspirado no Armaf Club de Nuit Woman",
         nota: 4.6,
@@ -208,6 +218,7 @@
         badge: "",
         emoji: "🧜‍♀️",
         imagem: "images/Feminino/Fakhar Rose.webp",
+        esgotado: false
     },
     {
         id: 14,
@@ -215,7 +226,7 @@
         marca: "Lattafa",
         categoria: "citrico",
         genero: "Feminino",
-        preco: 209.90,
+        preco: 209.9,
         descricao: "O famoso 'perfume da abelha'. Frutado doce e fresco, perfeito para o calor. Ótimo para o dia.",
         inspirado: "",
         nota: 4.7,
@@ -224,6 +235,7 @@
         badge: "Viral",
         emoji: "🐝",
         imagem: "images/Feminino/Atheeri.webp",
+        esgotado: false
     },
     {
         id: 15,
@@ -231,7 +243,7 @@
         marca: "Lattafa",
         categoria: "floral",
         genero: "Feminino",
-        preco: 199.90,
+        preco: 199.9,
         descricao: "Floral elegante e feminino com rosa, peônia e almíscar. Clássico, refinado e versátil.",
         inspirado: "Inspirado no Chance (Chanel)",
         nota: 4.6,
@@ -240,6 +252,7 @@
         badge: "",
         emoji: "🌷",
         imagem: "images/Feminino/Mayar.webp",
+        esgotado: false
     },
     {
         id: 16,
@@ -247,7 +260,7 @@
         marca: "Lattafa",
         categoria: "floral",
         genero: "Feminino",
-        preco: 239.90,
+        preco: 239.9,
         descricao: "Âmbar doce e envolvente com baunilha e cacau. Quente, aconchegante e com rastro marcante.",
         inspirado: "Inspirado no Libre (YSL)",
         nota: 4.6,
@@ -256,6 +269,7 @@
         badge: "",
         emoji: "💛",
         imagem: "images/Feminino/Nebras.webp",
+        esgotado: false
     },
     {
         id: 17,
@@ -263,7 +277,7 @@
         marca: "Lattafa",
         categoria: "floral",
         genero: "Feminino",
-        preco: 219.90,
+        preco: 219.9,
         descricao: "Floral frutado vermelho, doce e charmoso. Muito bem avaliado e agradável para o dia.",
         inspirado: "Inspirado no BR 540 (intenso)",
         nota: 4.7,
@@ -272,6 +286,7 @@
         badge: "",
         emoji: "🍓",
         imagem: "images/Feminino/Ana Abiyedh Rouge.webp",
+        esgotado: false
     },
     {
         id: 18,
@@ -279,7 +294,7 @@
         marca: "Lattafa",
         categoria: "floral",
         genero: "Feminino",
-        preco: 209.90,
+        preco: 209.9,
         descricao: "Variação da Yara, igualmente doce e deliciosa. Baunilha cremosa e fixação duradoura.",
         inspirado: "Inspirado no La Vie Est Belle",
         nota: 4.8,
@@ -288,6 +303,7 @@
         badge: "",
         emoji: "🩷",
         imagem: "images/Feminino/Yara Tous.webp",
+        esgotado: false
     },
     {
         id: 19,
@@ -295,7 +311,7 @@
         marca: "Al Wataniah",
         categoria: "floral",
         genero: "Feminino",
-        preco: 179.90,
+        preco: 179.9,
         descricao: "A 'pérola da noiva'. Floral almiscarado delicado e encantador, ideal para ocasiões especiais.",
         inspirado: "Inspirado no Prada Candy",
         nota: 4.5,
@@ -304,6 +320,7 @@
         badge: "",
         emoji: "🪷",
         imagem: "images/Feminino/Durrat Al Aroos.webp",
+        esgotado: false
     },
     {
         id: 20,
@@ -311,7 +328,7 @@
         marca: "Al Wataniah",
         categoria: "floral",
         genero: "Feminino",
-        preco: 189.90,
+        preco: 189.9,
         descricao: "Frutal oriental doce na medida certa, com brilho floral e final almiscarado. Luxuoso e feminino.",
         inspirado: "",
         nota: 4.6,
@@ -320,15 +337,15 @@
         badge: "",
         emoji: "💎",
         imagem: "images/Feminino/Watani.webp",
+        esgotado: false
     },
-    // ===== UNISSEX =====
     {
         id: 21,
         nome: "Khamrah",
         marca: "Lattafa",
         categoria: "floral",
         genero: "Unissex",
-        preco: 259.90,
+        preco: 259.9,
         descricao: "Gourmand especiado com canela, tâmara, baunilha e tonka. Quente e envolvente para noites frias.",
         inspirado: "Inspirado no Angels' Share (Kilian)",
         nota: 4.9,
@@ -337,6 +354,7 @@
         badge: "Tendência",
         emoji: "🥃",
         imagem: "images/Unissex/Khamrah.webp",
+        esgotado: false
     },
     {
         id: 22,
@@ -344,7 +362,7 @@
         marca: "Lattafa",
         categoria: "oud",
         genero: "Unissex",
-        preco: 219.90,
+        preco: 219.9,
         descricao: "Rosa búlgara, oud, baunilha e almíscar. Doce-almiscarado e sedutor, agrada ambos os públicos.",
         inspirado: "Inspirado no Baccarat Rouge 540",
         nota: 4.8,
@@ -353,6 +371,7 @@
         badge: "Premium",
         emoji: "💜",
         imagem: "images/Unissex/Bade'e Al Oud Amethyst.webp",
+        esgotado: false
     },
     {
         id: 23,
@@ -360,7 +379,7 @@
         marca: "French Avenue",
         categoria: "amadeirado",
         genero: "Unissex",
-        preco: 399.90,
+        preco: 399.9,
         descricao: "O rei do momento. Canela, flor de laranjeira, baunilha e pralinê. Doce e refinado.",
         inspirado: "Inspirado no Althair (Parfums de Marly)",
         nota: 4.9,
@@ -369,6 +388,7 @@
         badge: "Top 2026",
         emoji: "👑",
         imagem: "images/Unissex/Liquid Brun.webp",
+        esgotado: false
     },
     {
         id: 24,
@@ -376,7 +396,7 @@
         marca: "Lattafa",
         categoria: "amadeirado",
         genero: "Unissex",
-        preco: 249.90,
+        preco: 249.9,
         descricao: "O campeão de fixação. Âmbar e baunilha premium com especiarias quentes. Doce e marcante.",
         inspirado: "Inspirado no Tom Ford Noir Extreme",
         nota: 4.8,
@@ -385,6 +405,7 @@
         badge: "Top Fixação",
         emoji: "🥃",
         imagem: "images/Unissex/Asad Bourbon.webp",
+        esgotado: false
     },
     {
         id: 25,
@@ -392,7 +413,7 @@
         marca: "Swiss Arabian",
         categoria: "oud",
         genero: "Unissex",
-        preco: 459.90,
+        preco: 459.9,
         descricao: "Lenda moderna do oud doce. Potência e fixação extremas, mais de 12 horas na pele.",
         inspirado: "",
         nota: 4.7,
@@ -401,6 +422,7 @@
         badge: "Premium",
         emoji: "🕋",
         imagem: "images/Unissex/Shaghaf Oud.webp",
+        esgotado: false
     },
     {
         id: 26,
@@ -408,7 +430,7 @@
         marca: "Orientica",
         categoria: "floral",
         genero: "Unissex",
-        preco: 389.90,
+        preco: 389.9,
         descricao: "Extrait de Parfum de luxo. Frutas exóticas, melão e abacaxi com fundo ambarado. Rastro irresistível.",
         inspirado: "Inspirado no BR 540 Extrait",
         nota: 4.7,
@@ -417,6 +439,7 @@
         badge: "Luxo",
         emoji: "👑",
         imagem: "images/Unissex/Royal Amber.webp",
+        esgotado: false
     },
     {
         id: 27,
@@ -424,7 +447,7 @@
         marca: "Al Haramain",
         categoria: "amadeirado",
         genero: "Unissex",
-        preco: 349.90,
+        preco: 349.9,
         descricao: "Baunilha e especiarias. Conforto e sedução noturna impressionantes.",
         inspirado: "Inspirado no Layton (Parfums de Marly)",
         nota: 4.6,
@@ -433,6 +456,7 @@
         badge: "",
         emoji: "🕯️",
         imagem: "images/Unissex/Detour Noir.webp",
+        esgotado: false
     },
     {
         id: 28,
@@ -440,7 +464,7 @@
         marca: "Afnan",
         categoria: "floral",
         genero: "Unissex",
-        preco: 249.90,
+        preco: 249.9,
         descricao: "Gourmand sedutor e doce para a noite. Canela, baunilha e flor de laranjeira.",
         inspirado: "Inspirado no Ultramale (JPG)",
         nota: 4.8,
@@ -449,6 +473,7 @@
         badge: "Noite",
         emoji: "🌙",
         imagem: "images/Unissex/Afnan 9PM.webp",
+        esgotado: false
     },
     {
         id: 29,
@@ -456,7 +481,7 @@
         marca: "Lattafa",
         categoria: "floral",
         genero: "Unissex",
-        preco: 279.90,
+        preco: 279.9,
         descricao: "Gourmand intenso com baunilha, rosa e notas doces marcantes. Quente e envolvente.",
         inspirado: "Inspirado no Initio Oud for Greatness",
         nota: 4.7,
@@ -465,6 +490,7 @@
         badge: "",
         emoji: "🏅",
         imagem: "images/Unissex/Honor & Glory.webp",
+        esgotado: false
     },
     {
         id: 30,
@@ -472,7 +498,7 @@
         marca: "Afnan",
         categoria: "amadeirado",
         genero: "Unissex",
-        preco: 329.90,
+        preco: 329.9,
         descricao: "Assinatura marcante com performance forte para noite e meia-estação. Estilo sério e impactante.",
         inspirado: "Inspirado no Creed Aventus",
         nota: 4.8,
@@ -481,5 +507,6 @@
         badge: "",
         emoji: "⚜️",
         imagem: "images/Unissex/Supremacy Not Only Intense.webp",
+        esgotado: false
     }
 ];
