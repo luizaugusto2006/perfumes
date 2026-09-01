@@ -1,6 +1,5 @@
-// ===== NÚMEROS DO WHATSAPP PARA RECEBER PEDIDOS =====
-const WHATSAPP_NUMBER = "5521964351472"; // principal (links fixos)
-const WHATSAPP_NUMBERS = ["5521964351472", "55998951868"]; // pedidos vão para ambos
+// ===== NÚMERO DO WHATSAPP PARA RECEBER PEDIDOS =====
+const WHATSAPP_NUMBER = "5521964351472";
 
 // ===== Catálogo (admite override via admin localStorage) =====
 let perfumesData = (typeof perfumes !== 'undefined') ? perfumes.slice() : [];
@@ -256,10 +255,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (observacoes) mensagem += `*Observações:* ${observacoes}\n`;
         mensagem += `\n_Obrigado pela preferência! 🙏_`;
 
-        // Envia o mesmo pedido para todos os números (abre uma aba por número)
-        WHATSAPP_NUMBERS.forEach(function (num) {
-            window.open(`https://wa.me/${num}?text=${encodeURIComponent(mensagem)}`, '_blank');
-        });
+        // Envia o pedido para o WhatsApp
+        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensagem)}`, '_blank');
         closeModal();
     });
 
@@ -361,13 +358,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // ===== Links de WhatsApp abrem para todos os números =====
+    // ===== Links de WhatsApp =====
     document.querySelectorAll('a[data-multi-wa]').forEach(function (link) {
         link.addEventListener('click', function (e) {
             e.preventDefault();
-            WHATSAPP_NUMBERS.forEach(function (num) {
-                window.open('https://wa.me/' + num, '_blank');
-            });
+            window.open('https://wa.me/' + WHATSAPP_NUMBER, '_blank');
         });
     });
 });
