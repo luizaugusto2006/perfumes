@@ -3,7 +3,7 @@
     'use strict';
 
     const STORAGE_KEY = 'ea_perfumes_admin';
-    const ADMIN_PASS = 'admin123';
+    const ADMIN_PASS = '19160731';
 
     let data = [];
 
