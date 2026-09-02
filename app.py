@@ -13,6 +13,10 @@ ADMIN_PASS = '19160731'
 
 def load_perfumes():
     if not os.path.exists(DATA_FILE):
+        # Carrega do static se não existe (primeira vez)
+        fallback = os.path.join(BASE_DIR, 'static', 'js', 'data.js')
+        if os.path.exists(fallback):
+            return []
         return []
     with open(DATA_FILE, 'r', encoding='utf-8') as f:
         return json.load(f)
