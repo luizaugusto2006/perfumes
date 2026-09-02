@@ -6,28 +6,36 @@ from functools import wraps
 app = Flask(__name__, static_folder='static')
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATA_FILE = os.path.join(BASE_DIR, 'perfumes.json')
-ORDERS_FILE = os.path.join(BASE_DIR, 'orders.json')
+DATA_DIR = os.path.join(BASE_DIR, 'data')
+DATA_FILE = os.path.join(DATA_DIR, 'perfumes.json')
+ORDERS_FILE = os.path.join(DATA_DIR, 'orders.json')
+INITIAL_DATA = os.path.join(BASE_DIR, 'perfumes.json')
 ADMIN_PASS = '19160731'
 
 
+def ensure_data_dir():
+    os.makedirs(DATA_DIR, exist_ok=True)
+    if not os.path.exists(DATA_FILE) and os.path.exists(INITIAL_DATA):
+        import shutil
+        shutil.copy2(INITIAL_DATA, DATA_FILE)
+
+
 def load_perfumes():
+    ensure_data_dir()
     if not os.path.exists(DATA_FILE):
-        # Carrega do static se não existe (primeira vez)
-        fallback = os.path.join(BASE_DIR, 'static', 'js', 'data.js')
-        if os.path.exists(fallback):
-            return []
         return []
     with open(DATA_FILE, 'r', encoding='utf-8') as f:
         return json.load(f)
 
 
 def save_perfumes(perfumes):
+    ensure_data_dir()
     with open(DATA_FILE, 'w', encoding='utf-8') as f:
         json.dump(perfumes, f, ensure_ascii=False, indent=2)
 
 
 def load_orders():
+    ensure_data_dir()
     if not os.path.exists(ORDERS_FILE):
         return []
     with open(ORDERS_FILE, 'r', encoding='utf-8') as f:
@@ -35,6 +43,7 @@ def load_orders():
 
 
 def save_orders(orders):
+    ensure_data_dir()
     with open(ORDERS_FILE, 'w', encoding='utf-8') as f:
         json.dump(orders, f, ensure_ascii=False, indent=2)
 

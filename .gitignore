@@ -1,4 +1,3 @@
 __pycache__/
 *.pyc
-perfumes.json
-orders.json
+data/
