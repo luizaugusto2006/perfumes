@@ -7,6 +7,7 @@ app = Flask(__name__, static_folder='static')
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_FILE = os.path.join(BASE_DIR, 'perfumes.json')
+ORDERS_FILE = os.path.join(BASE_DIR, 'orders.json')
 ADMIN_PASS = '19160731'
 
 
@@ -22,6 +23,18 @@ def save_perfumes(perfumes):
         json.dump(perfumes, f, ensure_ascii=False, indent=2)
 
 
+def load_orders():
+    if not os.path.exists(ORDERS_FILE):
+        return []
+    with open(ORDERS_FILE, 'r', encoding='utf-8') as f:
+        return json.load(f)
+
+
+def save_orders(orders):
+    with open(ORDERS_FILE, 'w', encoding='utf-8') as f:
+        json.dump(orders, f, ensure_ascii=False, indent=2)
+
+
 def require_admin(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -31,6 +44,8 @@ def require_admin(f):
         return f(*args, **kwargs)
     return decorated
 
+
+# ===== Rotas estáticas =====
 
 @app.route('/')
 def index():
@@ -46,6 +61,8 @@ def admin():
 def serve_static(path):
     return send_from_directory('static', path)
 
+
+# ===== API Perfumes =====
 
 @app.route('/api/perfumes', methods=['GET'])
 def api_list_perfumes():
@@ -89,6 +106,51 @@ def api_delete_perfume(perfume_id):
         return jsonify({'error': 'Perfume não encontrado'}), 404
     save_perfumes(new_perfumes)
     return jsonify({'ok': True})
+
+
+# ===== API Pedidos =====
+
+@app.route('/api/orders', methods=['GET'])
+def api_list_orders():
+    return jsonify(load_orders())
+
+
+@app.route('/api/orders', methods=['POST'])
+def api_create_order():
+    orders = load_orders()
+    data = request.get_json(force=True)
+    required = ['perfume', 'nome', 'telefone', 'quantidade', 'total', 'pagamento']
+    missing = [f for f in required if not data.get(f)]
+    if missing:
+        return jsonify({'error': 'Campos obrigatórios: ' + ', '.join(missing)}), 400
+    next_id = max((o['id'] for o in orders), default=0) + 1
+    data['id'] = next_id
+    data['status'] = 'Solicitado'
+    orders.append(data)
+    save_orders(orders)
+    return jsonify(data), 201
+
+
+@app.route('/api/orders/<int:order_id>', methods=['PUT'])
+def api_update_order(order_id):
+    orders = load_orders()
+    idx = next((i for i, o in enumerate(orders) if o['id'] == order_id), None)
+    if idx is None:
+        return jsonify({'error': 'Pedido não encontrado'}), 404
+    data = request.get_json(force=True)
+    data['id'] = order_id
+    orders[idx] = data
+    save_orders(orders)
+
+    # Baixa estoque ao confirmar
+    if data.get('status') == 'Confirmado' and data.get('perfumeId') and data.get('quantidade'):
+        perfumes = load_perfumes()
+        pidx = next((i for i, p in enumerate(perfumes) if p['id'] == data['perfumeId']), None)
+        if pidx is not None:
+            perfumes[pidx]['estoque'] = max(0, (perfumes[pidx].get('estoque') or 0) - data['quantidade'])
+            save_perfumes(perfumes)
+
+    return jsonify(data)
 
 
 if __name__ == '__main__':

@@ -25,23 +25,20 @@ async function loadPerfumes() {
     renderAllPerfumes();
 }
 
-// ===== Pedidos salvos no localStorage =====
-function getOrders() {
-    try {
-        const saved = localStorage.getItem('ea_orders');
-        return saved ? JSON.parse(saved) : [];
-    } catch (e) {
-        return [];
-    }
-}
-
-function saveOrder(order) {
-    const orders = getOrders();
+// ===== Pedidos via API =====
+async function saveOrder(order) {
     order.id = Date.now();
     order.data = new Date().toLocaleString('pt-BR');
     order.status = 'Solicitado';
-    orders.push(order);
-    localStorage.setItem('ea_orders', JSON.stringify(orders));
+    try {
+        const res = await fetch('/api/orders', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(order)
+        });
+        if (res.ok) return await res.json();
+    } catch (e) {}
+    return null;
 }
 
 // ===== Formatação de preço BRL =====

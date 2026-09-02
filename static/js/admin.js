@@ -228,26 +228,23 @@
         }
     }
 
-    // ---------- Pedidos ----------
-    function getOrders() {
+    // ---------- Pedidos (API) ----------
+    let ordersData = [];
+
+    async function loadOrders() {
         try {
-            var saved = localStorage.getItem('ea_orders');
-            return saved ? JSON.parse(saved) : [];
+            ordersData = await apiRequest('GET', '/api/orders');
         } catch (e) {
-            return [];
+            ordersData = [];
         }
     }
 
-    function saveOrders(orders) {
-        localStorage.setItem('ea_orders', JSON.stringify(orders));
-    }
-
-    function renderOrders() {
+    async function renderOrders() {
+        await loadOrders();
         var listEl = document.getElementById('orders-list');
         var statusFilter = document.getElementById('order-filter-status').value;
-        var orders = getOrders();
 
-        var filtered = orders.filter(function (o) {
+        var filtered = ordersData.filter(function (o) {
             return statusFilter === 'all' || o.status === statusFilter;
         });
 
@@ -256,7 +253,7 @@
             return;
         }
 
-        listEl.innerHTML = filtered.reverse().map(function (o) {
+        listEl.innerHTML = filtered.slice().reverse().map(function (o) {
             var statusClass = 'status-' + o.status.toLowerCase();
             var actions = '';
             if (o.status === 'Solicitado') {
@@ -280,7 +277,6 @@
             '</div>';
         }).join('');
 
-        // Bind order actions
         listEl.querySelectorAll('[data-action]').forEach(function (btn) {
             btn.addEventListener('click', function () {
                 var action = btn.getAttribute('data-action');
@@ -290,44 +286,27 @@
         });
     }
 
-    function updateOrderStatus(id, action) {
-        var orders = getOrders();
-        var order = orders.find(function (o) { return o.id === id; });
+    async function updateOrderStatus(id, action) {
+        var order = ordersData.find(function (o) { return o.id === id; });
         if (!order) return;
 
         var newStatus = '';
-        var stockChange = 0;
-
         switch (action) {
-            case 'confirm':
-                newStatus = 'Confirmado';
-                stockChange = -order.quantidade;
-                break;
-            case 'cancel':
-                newStatus = 'Cancelado';
-                break;
-            case 'ship':
-                newStatus = 'Enviado';
-                break;
-            case 'deliver':
-                newStatus = 'Entregue';
-                break;
+            case 'confirm': newStatus = 'Confirmado'; break;
+            case 'cancel': newStatus = 'Cancelado'; break;
+            case 'ship': newStatus = 'Enviado'; break;
+            case 'deliver': newStatus = 'Entregue'; break;
         }
 
         if (newStatus) {
             order.status = newStatus;
-            saveOrders(orders);
-
-            // Baixa estoque ao confirmar
-            if (stockChange !== 0) {
-                var perfume = data.find(function (p) { return p.id === order.perfumeId; });
-                if (perfume) {
-                    perfume.estoque = Math.max(0, (perfume.estoque || 0) + stockChange);
-                    apiRequest('PUT', '/api/perfumes/' + perfume.id, perfume).catch(function () {});
-                }
+            try {
+                await apiRequest('PUT', '/api/orders/' + id, order);
+            } catch (e) {
+                showStatus('Erro ao atualizar pedido: ' + e.message, 'error');
+                return;
             }
-
-            renderOrders();
+            await renderOrders();
             showStatus('Pedido #' + id + ' atualizado para: ' + newStatus, 'success');
         }
     }
