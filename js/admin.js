@@ -265,14 +265,21 @@
                 actions = '<button class="admin-mini-btn" data-action="deliver" data-id="' + o.id + '">🚚 Entregue</button>';
             }
 
+            var qtdTexto = o.quantidade + (o.quantidade === 1 ? ' produto' : ' produtos');
+            var obsHtml = o.observacoes ? '<div class="order-line order-obs">' + escapeHtml(o.observacoes) + '</div>' : '';
+
             return '<div class="admin-item order-item" data-id="' + o.id + '">' +
-                '<div class="admin-item-body">' +
-                    '<h3 class="admin-item-title">' + escapeHtml(o.perfume) + ' <span class="order-status-badge ' + statusClass + '">' + o.status + '</span></h3>' +
-                    '<div class="admin-item-meta">' + escapeHtml(o.marca) + ' • ' + o.quantidade + 'x • ' + formatPrice(o.total) + '</div>' +
-                    '<div class="admin-item-meta">' + escapeHtml(o.nome) + ' • ' + escapeHtml(o.telefone) + ' • ' + o.pagamento + '</div>' +
-                    '<div class="admin-item-meta">' + o.data + '</div>' +
-                    (o.observacoes ? '<div class="admin-item-meta">Obs: ' + escapeHtml(o.observacoes) + '</div>' : '') +
-                    '<div class="admin-item-actions">' + actions + '</div>' +
+                '<div class="admin-item-body order-body">' +
+                    '<div class="order-line"><span class="order-status-badge ' + statusClass + '">' + o.status + '</span></div>' +
+                    '<div class="order-line order-perfume">' + escapeHtml(o.perfume) + ' ' + escapeHtml(o.marca) + '</div>' +
+                    '<div class="order-line">' + qtdTexto + '</div>' +
+                    '<div class="order-line order-total">' + formatPrice(o.total) + '</div>' +
+                    '<div class="order-line order-cliente">' + escapeHtml(o.nome) + '</div>' +
+                    obsHtml +
+                    '<div class="order-line">' + escapeHtml(o.telefone) + '</div>' +
+                    '<div class="order-line">' + o.pagamento + '</div>' +
+                    '<div class="order-line order-data">' + o.data + '</div>' +
+                    '<div class="order-line order-actions">' + actions + '</div>' +
                 '</div>' +
             '</div>';
         }).join('');

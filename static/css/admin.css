@@ -302,6 +302,16 @@
 .btn-cancel { border-color: #ff6b6b !important; color: #ff6b6b !important; }
 .btn-cancel:hover { background: rgba(255,107,107,0.2) !important; }
 
+/* ===== Formato do Pedido ===== */
+.order-body { line-height: 1.5; }
+.order-line { margin-bottom: 2px; color: var(--text-soft); font-size: 0.85rem; }
+.order-perfume { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 600; color: var(--text); }
+.order-total { color: var(--gold); font-weight: 700; font-size: 1rem; }
+.order-cliente { font-weight: 500; color: var(--text); }
+.order-obs { font-style: italic; color: var(--text-muted); }
+.order-data { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; }
+.order-actions { margin-top: 8px; }
+
 /* ===== Estoque ===== */
 .admin-stock-qty {
     font-size: 0.8rem;
