@@ -139,12 +139,12 @@ def api_update_order(order_id):
         return jsonify({'error': 'Pedido não encontrado'}), 404
     data = request.get_json(force=True)
     data['id'] = order_id
+    old_status = orders[idx].get('status', 'Solicitado')
     orders[idx] = data
     save_orders(orders)
 
-    # Baixa estoque ao confirmar (Solicitado → Confirmado/Enviado/Entregue)
+    # Baixa estoque ao avançar status (Solicitado → Confirmado/Enviado/Entregue)
     if data.get('status') in ('Confirmado', 'Enviado', 'Entregue'):
-        old_status = orders[idx].get('status', 'Solicitado')
         if old_status == 'Solicitado' and data.get('perfumeId') and data.get('quantidade'):
             perfumes = load_perfumes()
             pidx = next((i for i, p in enumerate(perfumes) if p['id'] == data['perfumeId']), None)
