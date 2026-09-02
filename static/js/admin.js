@@ -380,6 +380,127 @@
 
         // ===== Pedidos =====
         document.getElementById('order-filter-status').addEventListener('change', renderOrders);
+
+        // ===== Relatórios =====
+        document.getElementById('btn-report-estoque').addEventListener('click', function () { showReport('estoque'); });
+        document.getElementById('btn-report-vendas').addEventListener('click', function () { showReport('vendas'); });
+        document.getElementById('report-close').addEventListener('click', closeReport);
+        document.getElementById('report-modal').addEventListener('click', function (e) { if (e.target === this) closeReport(); });
+        document.getElementById('btn-report-print').addEventListener('click', printReport);
+        document.getElementById('btn-report-csv').addEventListener('click', downloadCSV);
+    }
+
+    // ---------- Relatórios ----------
+    let currentReportType = '';
+    let currentReportData = [];
+
+    function showReport(type) {
+        currentReportType = type;
+        var title = document.getElementById('report-title');
+        var content = document.getElementById('report-content');
+
+        if (type === 'estoque') {
+            title.textContent = 'Relatório de Estoque';
+            var totalEstoque = data.reduce(function (s, p) { return s + (p.estoque || 0); }, 0);
+            var totalItens = data.length;
+            var esgotados = data.filter(function (p) { return p.esgotado || (p.estoque || 0) === 0; }).length;
+            var estoqueZero = data.filter(function (p) { return (p.estoque || 0) === 0 && !p.esgotado; }).length;
+
+            currentReportData = data.map(function (p) {
+                return { nome: p.nome, marca: p.marca, genero: p.genero, estoque: p.estoque || 0, preco: p.preco, esgotado: p.esgotado };
+            });
+
+            var html = '<div class="report-summary">';
+            html += '<div class="report-stat"><span class="report-stat-num">' + totalItens + '</span><span class="report-stat-label">Produtos</span></div>';
+            html += '<div class="report-stat"><span class="report-stat-num">' + totalEstoque + '</span><span class="report-stat-label">Total em Estoque</span></div>';
+            html += '<div class="report-stat report-stat-warn"><span class="report-stat-num">' + esgotados + '</span><span class="report-stat-label">Esgotados</span></div>';
+            html += '<div class="report-stat report-stat-alert"><span class="report-stat-num">' + estoqueZero + '</span><span class="report-stat-label">Estoque Zero</span></div>';
+            html += '</div>';
+
+            html += '<table class="report-table"><thead><tr><th>Produto</th><th>Marca</th><th>Gênero</th><th>Estoque</th><th>Preço</th><th>Status</th></tr></thead><tbody>';
+            data.forEach(function (p) {
+                var status = p.esgotado ? '<span class="report-badge esg">Esgotado</span>'
+                    : (p.estoque || 0) === 0 ? '<span class="report-badge alert">Estoque Zero</span>'
+                    : (p.estoque || 0) <= 2 ? '<span class="report-badge warn">Baixo</span>'
+                    : '<span class="report-badge ok">OK</span>';
+                html += '<tr><td>' + escapeHtml(p.nome) + '</td><td>' + escapeHtml(p.marca) + '</td><td>' + escapeHtml(p.genero) + '</td><td>' + (p.estoque || 0) + '</td><td>' + formatPrice(p.preco) + '</td><td>' + status + '</td></tr>';
+            });
+            html += '</tbody></table>';
+            content.innerHTML = html;
+
+        } else if (type === 'vendas') {
+            title.textContent = 'Relatório de Vendas';
+            var orders = ordersData;
+
+            var totalVendas = orders.length;
+            var valorTotal = orders.reduce(function (s, o) { return s + (o.total || 0); }, 0);
+            var pedidosPendentes = orders.filter(function (o) { return o.status === 'Solicitado'; }).length;
+            var pedidosEntregues = orders.filter(function (o) { return o.status === 'Entregue'; }).length;
+
+            currentReportData = orders.map(function (o) {
+                return { nome: o.nome, telefone: o.telefone, perfume: o.perfume, marca: o.marca, quantidade: o.quantidade, total: o.total, pagamento: o.pagamento, status: o.status, data: o.data };
+            });
+
+            var html = '<div class="report-summary">';
+            html += '<div class="report-stat"><span class="report-stat-num">' + totalVendas + '</span><span class="report-stat-label">Pedidos</span></div>';
+            html += '<div class="report-stat"><span class="report-stat-num">' + formatPrice(valorTotal) + '</span><span class="report-stat-label">Faturamento</span></div>';
+            html += '<div class="report-stat report-stat-warn"><span class="report-stat-num">' + pedidosPendentes + '</span><span class="report-stat-label">Pendentes</span></div>';
+            html += '<div class="report-stat"><span class="report-stat-num">' + pedidosEntregues + '</span><span class="report-stat-label">Entregues</span></div>';
+            html += '</div>';
+
+            if (!orders.length) {
+                html += '<p style="text-align:center;color:var(--text-soft);padding:20px;">Nenhum pedido registrado.</p>';
+            } else {
+                html += '<table class="report-table"><thead><tr><th>Data</th><th>Cliente</th><th>Telefone</th><th>Perfume</th><th>Qtd</th><th>Total</th><th>Pagamento</th><th>Status</th></tr></thead><tbody>';
+                orders.slice().reverse().forEach(function (o) {
+                    var statusClass = 'status-' + o.status.toLowerCase();
+                    html += '<tr><td>' + o.data + '</td><td>' + escapeHtml(o.nome) + '</td><td>' + escapeHtml(o.telefone) + '</td><td>' + escapeHtml(o.perfume) + '</td><td>' + o.quantidade + '</td><td>' + formatPrice(o.total) + '</td><td>' + o.pagamento + '</td><td><span class="order-status-badge ' + statusClass + '">' + o.status + '</span></td></tr>';
+                });
+                html += '</tbody></table>';
+            }
+            content.innerHTML = html;
+        }
+
+        document.getElementById('report-modal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeReport() {
+        document.getElementById('report-modal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function printReport() {
+        var content = document.getElementById('report-content').innerHTML;
+        var win = window.open('', '_blank');
+        win.document.write('<html><head><title>Relatório</title><style>body{font-family:Arial,sans-serif;padding:20px;}table{width:100%;border-collapse:collapse;margin-top:10px;}th,td{border:1px solid #ccc;padding:6px 8px;text-align:left;font-size:12px;}th{background:#f5f5f5;font-weight:bold;}.report-summary{display:flex;gap:15px;margin-bottom:15px;}.report-stat{background:#f0f0f0;padding:10px 15px;border-radius:8px;text-align:center;}.report-stat-num{display:block;font-size:18px;font-weight:bold;}.report-stat-label{font-size:11px;color:#666;}</style></head><body>');
+        win.document.write('<h2>' + document.getElementById('report-title').textContent + '</h2>');
+        win.document.write(content);
+        win.document.write('</body></html>');
+        win.document.close();
+        win.print();
+    }
+
+    function downloadCSV() {
+        if (!currentReportData.length) return;
+        var headers = Object.keys(currentReportData[0]);
+        var lines = [headers.join(';')];
+        currentReportData.forEach(function (row) {
+            lines.push(headers.map(function (h) {
+                var val = String(row[h] || '').replace(/"/g, '""');
+                return '"' + val + '"';
+            }).join(';'));
+        });
+        var csv = '\uFEFF' + lines.join('\n');
+        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'relatorio-' + currentReportType + '-' + new Date().toISOString().slice(0, 10) + '.csv';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
     }
 
     document.addEventListener('DOMContentLoaded', bindEvents);

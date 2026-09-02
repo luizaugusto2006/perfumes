@@ -39,6 +39,8 @@
                     <span class="logo-text">Essência <span>Árabe</span> <em class="admin-tag">Admin</em></span>
                 </div>
                 <div class="admin-header-actions">
+                    <button class="btn btn-admin" id="btn-report-estoque">📊 Rel. Estoque</button>
+                    <button class="btn btn-admin" id="btn-report-vendas">📊 Rel. Vendas</button>
                     <button class="btn btn-admin-logout" id="btn-logout">Sair</button>
                 </div>
             </div>
@@ -196,6 +198,19 @@
                     <button type="submit" class="btn btn-admin">Salvar Perfume</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- ===== MODAL DE RELATÓRIO ===== -->
+    <div class="modal-overlay" id="report-modal">
+        <div class="modal modal-admin">
+            <button class="modal-close" id="report-close">&times;</button>
+            <h3 class="modal-title" id="report-title">Relatório</h3>
+            <div id="report-content" class="report-content"></div>
+            <div class="admin-form-actions">
+                <button type="button" class="btn btn-admin" id="btn-report-print">🖨️ Imprimir</button>
+                <button type="button" class="btn btn-admin" id="btn-report-csv">⬇️ CSV</button>
+            </div>
         </div>
     </div>
 
